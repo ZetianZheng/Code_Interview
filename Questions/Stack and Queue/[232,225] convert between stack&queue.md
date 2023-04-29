@@ -14,18 +14,19 @@ stack, queue, FIFO, LIFO, 负负得正，线性表
 stack queue
 
 ## 初始思路
-stack和queue的特征：
-stack: 线性表：表尾插入和删除
-queue: 线性表：一端插入，一端删除
-要用stack 模拟queue的话，
-可以用两个stack 模拟queue， 一个模拟表头，一个模拟表尾
+1. stack和queue的特征：  
+   1. stack: 线性表：表尾插入和删除  
+   2. queue: 线性表：一端插入，一端删除  
+2. 要用stack 模拟queue的话，  
+    可以用两个stack 模拟queue， 一个模拟表头，一个模拟表尾  
 
 ## 考点  
 栈和队列的基本知识点。FIFO and LIFO
 
 ## 解法  
 比较有意思的是使用了负负得正的逆向思维，
-同字符串翻转 [Reverse Words in a String - LeetCode](https://leetcode.com/problems/reverse-words-in-a-string/) 有异曲同工之妙。
+同字符串翻转 [Reverse Words in a String - LeetCode](https://leetcode.com/problems/reverse-words-in-a-string/) 有异曲同工之妙。  
+
 具体解法： 
 ```
 用栈实现队列
@@ -92,11 +93,11 @@ stack, queue, FIFO, LIFO，线性表
 ## 审题（关键词） 
 stack queue
 ## 初始思路  
-stack和queue的特征：
-stack: 线性表：表尾插入和删除
-queue: 线性表：一端插入，一端删除
-要用queue 模拟stack的话，
-用一个队列自己倒腾 + top element记录栈顶元素 即可实现。
+1. stack和queue的特征：  
+   1. stack: 线性表：表尾插入和删除  
+   2. queue: 线性表：一端插入，一端删除  
+2. 要用queue 模拟stack的话，  
+   用一个队列自己倒腾 + top element记录栈顶元素 即可实现。  
 ## 考点  
 栈和队列的基本知识点。
 ## 解法  
