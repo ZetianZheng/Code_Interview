@@ -1,0 +1,89 @@
+# [Binary Tree Inorder Traversal - LeetCode](https://leetcode.com/problems/binary-tree-inorder-traversal/description/)
+## Tag
+Binary Tree, InOrder, Traversal
+## 审题（关键词） 
+Binary Tree, InOrder, Traversal
+## 初始思路  
+1. 递归思路：
+	1. 确定参数和返回值
+	2. 确定返回值
+	3. 确定单层的逻辑
+2. 迭代思路：
+	1. 中序遍历，中序遍历是左中右，先访问的是二叉树顶部的节点，
+	2. 然后一层一层向下访问，直到到达树左面的最底部，
+	3. 再开始处理节点（也就是在把节点的数值放进result数组中）
+
+## 考点  
+
+## 解法 
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> inorder = new ArrayList<>();
+        helper(root, inorder);
+        
+        return inorder;
+    }
+    
+    public void helper(TreeNode root, List<Integer> inorder) {
+        if (root == null) {
+            return;
+        }
+        
+        helper(root.left, inorder);
+        inorder.add(root.val);
+        helper(root.right, inorder);
+    }
+}
+```
+2. 迭代解法：
+```java
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> inorder = new ArrayList<>();
+
+        Stack<TreeNode> stack = new Stack<>();
+        
+        TreeNode curr = root;
+        // 中序遍历：左中右，中间节点需要左边全部遍历完毕
+        while (curr != null || !stack.isEmpty()) {
+            // 访问：当前指针还需要往左遍历, 左边节点的全部放入栈
+            if (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            } else {
+                // 访问到最左，开始处理：出栈输出
+                curr = stack.pop();
+                inorder.add(curr.val);
+
+                // 处理完当前，回溯时，开始访问右节点。
+                curr = curr.right;
+            }
+        }
+        
+        return inorder;
+    }
+    
+
+}
+```
+## 难点
+- 不能使用前序遍历的思路了：
+	1. 因为前序和后序都可以先遍历中间节点。中序遍历没有办法做到先遍历中间节点。
+	2. 前序遍历的思路：1 处理：将元素放进result数组中 2 访问：遍历节点。 因为要访问的元素和要处理的元素顺序是一致的，都是中间节点。
+	3. 中序遍历 要访问的元素（左节点）和处理的元素（中间节点）不一致，所以不能套用这个思路。
