@@ -1,0 +1,138 @@
+# [101 Symmetric Tree - LeetCode](https://leetcode.com/problems/symmetric-tree/description/)
+## Tag
+Binary Tree, PostOrder, Stack, BFS
+## 审题（关键词） 
+Symmetric, 还要注意递归性。
+## 解法  
+1. 递归解法：
+   1. 后序遍历
+   2. 得知子树都为镜像的情况下，再判断本节点：两个子树值是否相等，是则互为镜像。
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    // 递归的思路：后序遍历，在回溯时，如果两个子树都已经对称了，在（后序位置）判断本节点是是否对称
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return compare(root.left, root.right);
+    }
+
+    private boolean compare(TreeNode left, TreeNode right) {
+        // base case:
+        if (right == null && left == null) {
+            return true;
+        } else if(right == null || left ==null) {
+            return false;
+        } else if (right.val != left.val) {
+            return false;
+        }
+
+        // right and left are not null,
+        // compare their subTree(recursion), then compare in this node(post-order):
+        boolean outside = compare(left.left, right.right);
+        boolean inside = compare(left.right, right.left);
+
+        // post order position:
+        return inside && outside;
+    }
+}
+```
+
+2. BFS解法： 成对的放入最左边节点和最右边节点，取出一对判断是否相等。
+   1. 在每一步中，我们从队列中取出一对节点（左子树和右子树的节点），并检查它们是否相等。
+   2. 如果它们相等，
+   3. 则将左子树的左子节点，与右子树的右子节点以及
+   4. 左子树的右子节点，与右子树的左子节点放入队列中。
+```java
+public boolean isSymmetric(TreeNode root) {
+    if (root == null) {
+        return true;
+    }
+    
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root.left);
+    queue.offer(root.right);
+    
+    while (!queue.isEmpty()) {
+        TreeNode left = queue.poll();
+        TreeNode right = queue.poll();
+        
+        // 当左右节点都为 null 时，继续处理下一个节点对
+        if (left == null && right == null) {
+            continue;
+        }
+        
+        // 如果其中一个节点为 null 或节点值不等，则不对称
+        if (left == null || right == null || left.val != right.val) {
+            return false;
+        }
+        
+        // 将左节点的左子树与右节点的右子树放入队列
+        queue.offer(left.left);
+        queue.offer(right.right);
+        
+        // 将左节点的右子树与右节点的左子树放入队列
+        queue.offer(left.right);
+        queue.offer(right.left);
+    }
+    
+    return true;
+}
+```
+> 发现这个队列是成对取放，也就是说可以使用stack的结构
+```java
+class Solution {
+
+
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root.left);
+        stack.push(root.right);
+
+        while (!stack.isEmpty()) {
+            TreeNode node1 = stack.pop();
+            TreeNode node2 = stack.pop();
+
+            // 当两个节点都为 null 时，继续处理下一个节点对
+            if (node1 == null && node2 == null) {
+                continue;
+            }
+
+            // 如果其中一个节点为 null 或节点值不等，则不对称
+            if (node1 == null || node2 == null || node1.val != node2.val) {
+                return false;
+            }
+
+            // 将 node1 的左子节点和 node2 的右子节点放入栈中
+            stack.push(node1.left);
+            stack.push(node2.right);
+
+            // 将 node1 的右子节点和 node2 的左子节点放入栈中
+            stack.push(node1.right);
+            stack.push(node2.left);
+        }
+
+        return true;
+    }
+}
+```
+

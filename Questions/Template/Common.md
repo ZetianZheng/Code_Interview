@@ -11,4 +11,8 @@
       ...add some values...
       ans.stream().mapToInt(Integer::intValue).toArray();
       ```
-2. 
+## 数组：
+1. 翻转数组
+      ```java
+      Collections.reverse(arraylist);
+      ```

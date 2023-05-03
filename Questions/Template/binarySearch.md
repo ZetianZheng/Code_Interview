@@ -8,11 +8,10 @@ int binary_search(int[] nums, int target) {
         } else if (nums[mid] > target) {
             right = mid - 1; 
         } else if(nums[mid] == target) {
-            // 直接返回
             return mid;
         }
     }
-    // 直接返回
+
     return -1;
 }
 ```

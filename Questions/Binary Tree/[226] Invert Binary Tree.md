@@ -1,0 +1,140 @@
+## Resource:
+- [代码随想录](https://programmercarl.com/0226.%E7%BF%BB%E8%BD%AC%E4%BA%8C%E5%8F%89%E6%A0%91.html#%E9%80%92%E5%BD%92%E6%B3%95)
+- [东哥带你刷二叉树（思路篇） :: labuladong的算法小抄](https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-66994/dong-ge-da-cbce8/)
+# [Invert Binary Tree - LeetCode](https://leetcode.com/problems/invert-binary-tree/)
+## Tag
+BinaryTree, Recursion
+
+## Solution
+### 递归写法
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    // 递归思路：拆解问题：先翻转左右子树，在本层再翻转左右子节点（后序遍历）
+    public TreeNode invertTree(TreeNode root) {
+        // bc 拆解的终极：null 节点
+        if (root == null) {
+            return null;
+        }
+        
+        // rec part: 拆解方向：树的子节点
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+        
+        // work need to be done in this level: 
+        // 这个小问题是什么：翻转本层二叉树。
+        // 至于接下来的小问题是什么，并不关心，只关心本层的问题如何解决：对调左右子节点。
+        root.left = right;
+        root.right = left;
+        return root;
+    }
+}
+```
+
+```java
+class Solution {
+    // 迭代思路：访问本节点，再翻转左右节点
+    public TreeNode invertTree(TreeNode root) {
+        // bc 拆解的终极：null 节点
+        if (root == null) {
+            return null;
+        }
+
+        // work need to be done in this level: 
+        // 这个小问题是什么：翻转本层二叉树。
+        // 至于接下来的小问题是什么，并不关心，只关心本层的问题如何解决：对调左右子节点。
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        
+        // 递归遍历下两个子节点：
+        invertTree(root.left);
+        invertTree(root.right);
+
+        return root;
+    }
+}
+```
+
+### 迭代写法：
+> 使用stack，模仿： [145 preorder traversal](./Traversal/%5B144%5D%20Binary%20Tree%20Preorder%20Traversal.md)
+```java
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        if (root == null) {
+            return null;
+        }
+        
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode top = stack.pop();
+            //处理: 前序 交换：
+            swap(top);
+
+            // 访问：遍历下个子节点
+            if(top.right != null) {
+                stack.push(top.right);
+            }
+
+
+            if(top.left != null) {
+                stack.push(top.left);
+            }
+        }
+
+        return root;
+    }
+
+    private void swap(TreeNode top) {
+        TreeNode temp = top.left;
+        top.left = top.right;
+        top.right = temp;
+    }
+}
+```
+
+##  BFS写法：
+> 迭代框架：先处理本节点，再访问子节点。 [bfs common questions](./BFS/BFS_Common_Question.md)
+```java
+//BFS
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {return null;}
+        ArrayDeque<TreeNode> deque = new ArrayDeque<>();
+        deque.offer(root);
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            while (size-- > 0) {
+                TreeNode node = deque.poll();
+                // 迭代框架：先处理本节点，再访问子节点。
+                swap(node);
+                if (node.left != null) deque.offer(node.left);
+                if (node.right != null) deque.offer(node.right);
+            }
+        }
+        return root;
+    }
+
+    public void swap(TreeNode root) {
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+    }
+}
+```
