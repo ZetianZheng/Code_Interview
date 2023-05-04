@@ -1,0 +1,43 @@
+# [Balanced Binary Tree - LeetCode](https://leetcode.com/problems/balanced-binary-tree/description/)
+## 审题（关键词）
+binary tree, height-balanced
+
+## 初始思路  
+1. 什么是高度平衡：左右子树的高度差不超过1，且每一个节点都如此：天生就有递归性，
+2. 因为我们要求左右子树的高度，所以使用后序遍历的方法 详见114
+3. 二叉树的遍历，使用递归思路尝试，每一个节点返回高度，和判断它本身是否是height balanced
+4. 需不需要多余参数：不需要
+## 考点  
+二叉树的深度和高度，二叉树的遍历，递归的思路，拆解问题
+## 解法 
+```java
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        // 递归：子问题思维：左右子树都是平衡的，且左右子树的最大高度相差不超过1.
+        if (root== null) {
+            return true;
+        }
+        // 每个节点干的事：判断自己是否是平衡树
+        // 拆解问题：只需要知道左右子树的高度，就可以判断，不需自身高度
+        int left = getHeight(root.left);
+        int right = getHeight(root.right);
+        // 平衡树的满足条件：
+        if (Math.abs(left - right) <= 1 && isBalanced(root.left) && isBalanced(root.right)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    // 第二个递归，解决求树的高度的问题（lt.104)
+    private int getHeight(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int left = getHeight(root.left);
+        int right = getHeight(root.right);
+
+        return Math.max(left, right) + 1;
+    }
+}
+```

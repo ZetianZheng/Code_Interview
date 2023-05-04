@@ -1,0 +1,51 @@
+# [Sum of Left Leaves - LeetCode](https://leetcode.com/problems/sum-of-left-leaves/description/)
+## Tag
+BinaryTree, PostOrder
+## 审题（关键词） 
+Left Leaves, binary Tree
+
+## 初始思路  
+- 左叶子节点定义： 节点A的左孩子不为空，且左孩子的左右孩子都为空（说明是叶子节点），那么A节点的左孩子为左叶子节点
+- 如何判断这个节点是左叶子节点：
+	- 判断当前节点是不是左叶子是无法判断的，必须要通过节点的父节点来判断其左孩子是不是左叶子。
+	- 如果该节点的左节点不为空，该节点是叶子节点，则找到了一个左叶子
+	- 说的简单一点：这个叶子节点必须是父节点的左节点
+
+## 考点  
+左叶子节点，后序遍历。
+## 解法  
+```java
+class Solution {
+    // 需要弄清楚左叶子节点的定义
+    // 递归思路：拆解问题：本节点的左叶子节点之和是左子树的左叶子节点和 加 右子树的左叶子节点之和，求和
+    // 参数：节点本身，不需要其他参数
+    // 递归位置： 后序遍历
+    public int sumOfLeftLeaves(TreeNode root) {
+        // bc: 
+        if (root == null) {
+            return 0;
+        }
+
+        // 后序遍历        
+        // 访问：
+        int left = sumOfLeftLeaves(root.left);
+        int right = sumOfLeftLeaves(root.right);
+
+        // 处理：
+        // 下一个左节点是左叶子节点，处理本节点的左叶子节点之和。
+        int mid = 0;
+        if (root.left != null && root.left.left == null && root.left.right ==null) {
+            mid = root.left.val;
+        }
+
+        // 返回所有左叶子节点之和   
+        return mid + left + right;
+    }
+}
+```
+
+## 难点
+明白要在父节点 处判断左叶子节点。
+左叶子节点的两个条件：
+1. 父节点的左节点
+2. 叶子节点

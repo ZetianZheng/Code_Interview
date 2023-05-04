@@ -379,3 +379,30 @@ class Solution {
     }
 }
 ```
+## [222 Count Complete Tree Nodes - LeetCode](https://leetcode.com/problems/count-complete-tree-nodes/description/)
+> 不用记录层数，直接数节点数量
+```java
+class Solution {
+    public int countNodes(TreeNode root) {
+        // use Queue
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (root != null) {
+            queue.offer(root);
+        }
+        
+        int ans = 0;
+
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+            // 处理：
+            ans++;
+            // 访问：
+            if (curr.left != null) queue.add(curr.left);
+            if (curr.right != null) queue.add(curr.right);
+        }
+
+        return ans;
+    }
+
+}
+```
