@@ -1,0 +1,140 @@
+# [Minimum Depth of Binary Tree - LeetCode](https://leetcode.com/problems/minimum-depth-of-binary-tree/description/)
+## Tag
+PreOrder, PostOrder, BFS, BinaryTree, iteration, recursion
+
+## 审题（关键词） 
+Binary Tree, minimum depth
+
+## 初始思路  
+求最短距离，一般是用bfs，最优
+
+和104题类似，使用：唯一不同的是处理时，需要判断叶子节点。
+1. 遍历思路
+2. 递归思路（dfs)
+3. 详见： [104 Maximum Depth of Binary Tree](./%5B104%5D%20Maximum%20Depth%20of%20Binary%20Tree.md)
+
+## 考点  
+1. BFS
+2. 学习二叉树的两种解题思路, 分清树的高度和深度的不同。
+
+## 解法  
+> 遍历思路：使用前序遍历解法： 中左右。每个节点记录深度，到叶子节点为止。
+> 注意：
+> 1. 前序遍历一般使用全局变量记录最终答案
+> 2. 回溯维护depth
+> 3. 前序遍历需要多余的参数：depth记录深度
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    // 前序遍历解法： 中左右，遍历思路。每个节点记录深度，到叶子节点为止。
+    // 全局遍历记录答案，会简单易懂一点。
+    int min = Integer.MAX_VALUE;
+
+    public int minDepth(TreeNode root) {
+        // 需要多余的参数吗？需要，需要记录深度
+        traverse(root, 0);
+        return min == Integer.MAX_VALUE ? 0 : min;
+    }
+
+    void traverse(TreeNode node, int depth) {
+        // bc:
+        if (node == null) {
+            return;
+        }
+        depth++;
+        // 处理： 找到叶子节点，更新min值
+        if (node.left == null && node.right == null) {
+            min = Math.min(min, depth);
+        }
+
+        // 访问：子节点：
+        traverse(node.left, depth);
+        traverse(node.right, depth);
+
+        // 回溯，维护depth
+        depth--;
+    }
+}
+```
+> 递归思路：使用后序遍历解法
+> 处理有几种情况：
+> 1. 只有左子树有值，走左
+> 2. 只有右子树有值，走右
+> 3. 上述两种情况包括了都没值，自身是叶子节点的情况。
+> 3. 都有值，本身取最小
+```java
+class Solution {
+    // 后序遍历解法： 左右中，递归思路。拆解子问题：两个子节点最小高度+1， 就是我的最小高度
+
+    public int minDepth(TreeNode root) {
+        // 需要多余的参数吗？不需要
+        // bc:
+        if (root == null) {
+            return 0;
+        }
+
+        // 访问：
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+
+        // 处理，
+        if (root.left == null) {
+            return right + 1;
+        }
+        if (root.right == null) {
+            return left + 1;
+        }
+        // 左右结点都不为null
+        return Math.min(left, right) + 1;
+    }
+
+}
+```
+
+> BFS 遍历：  
+> 比较直观，求层数到叶子节点。
+```java
+class Solution {
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        // root 本身就是一层，depth 初始化为 1
+        int depth = 1;
+
+        while (!q.isEmpty()) {
+
+            int sz = q.size();
+            /* 遍历当前层的节点 */
+            for (int i = 0; i < sz; i++) {
+                TreeNode cur = q.poll();
+                /* 判断是否到达叶子结点 */
+                if (cur.left == null && cur.right == null)
+                    return depth;
+                /* 将下一层节点加入队列 */
+                if (cur.left != null)
+                    q.offer(cur.left);
+                if (cur.right != null)
+                    q.offer(cur.right);
+            }
+            /* 这里增加步数 */
+            depth++;
+        }
+        return depth;
+    }
+}
+ ```

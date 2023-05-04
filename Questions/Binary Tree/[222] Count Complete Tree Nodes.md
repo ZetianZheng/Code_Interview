@@ -1,0 +1,74 @@
+## Resource
+[要理解普通二叉树和完全二叉树的区别！ | LeetCode：222.完全二叉树节点的数量_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1eW4y1B7pD/?vd_source=11fa18bc276af3bba75dd7f376bfe9c9)
+# [Count Complete Tree Nodes - LeetCode](https://leetcode.com/problems/count-complete-tree-nodes/)
+## Tag
+Binary Tree, Complete Tree, 
+
+## 审题（关键词） 
+完全二叉树，节点数量
+
+## 初始思路  
+1. 普通二叉树的遍历思路：
+	所有子节点之和加自身
+2. 利用complete binary tree 这个条件：  
+	满二叉树的深度可以直接计算：2^树深度 - 1  
+	完全二叉树除了最后一层，都是满的，  
+	那么如何知道一棵树是满or not？  
+		一直向左遍历的深度和一直向右的深度是否一致， 如果一致，说明最底层是满的，如果不一致则不是满的。  
+  
+## 考点  
+recursion, complete binary tree, 后序遍历
+
+## 解法  
+> 针对普通二叉树的解法：后序遍历
+```java
+class Solution {
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        // 访问
+        int leftNodes = countNodes(root.left);
+        int rightNodes = countNodes(root.right);
+
+        // 处理：后序位置，左右子节点数量+1
+        return leftNodes + rightNodes + 1;
+    }
+}
+```
+> 充分利用完全二叉树的特点, 一定有一边是满二叉树，满二叉树可以直接通过： 2^树深度 - 1计算节点数量：
+```java
+class Solution {
+    // 利用完全二叉树的特点：左边一定有满二叉树，减少访问量
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        // 判断本节点是不是满二叉树：
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        int lh = 0, rh = 0; // 这里初始为0是有目的的，为了下面求指数方便
+        while (left != null) {  // 求左子树深度
+            left = left.left;
+            lh++;
+        }
+        while (right != null) { // 求右子树深度
+            right = right.right;
+            rh++;
+        }
+        boolean isPerfectTree = (lh == rh);
+
+        // 如果是满二叉树则数量：  2^树深度 - 1
+       if (lh == rh) {
+            return (2 << lh) - 1; // 注意(2<<1) 相当于2^2，所以leftDepth初始为0
+        }
+
+        // 如果不是满二叉树， 则继续使用普通二叉树的思路：
+        return countNodes(root.left) + countNodes(root.right) + 1;        
+    }
+
+}
+```
+## 难点
+如何充分利用complete binary tree的特点。理解完全二叉树。
