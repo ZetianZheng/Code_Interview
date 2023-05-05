@@ -1,0 +1,84 @@
+# [Find Bottom Left Tree Value - LeetCode](https://leetcode.com/problems/find-bottom-left-tree-value/description/)
+## Tag
+Binary Tree, BFS, Recursion
+## 审题（关键词） 
+leftmost value in the last row
+
+## 初始思路  
+1. 递归思路：
+	1. 因为不是完全二叉树，所以无法确定最后一排最左是谁
+	2. 可以使用前序遍历通过深度更新判断每一层第一个。
+2. 使用迭代思路，BFS找最后一排记录第一个
+## 考点  
+BFS, Recursion，backTracking
+
+## 解法  
+> 迭代解法：使用BFS记录每一层的第一个元素：
+```java
+class Solution {
+    public int findBottomLeftValue(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        int LastFirst = -1;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            
+            for (int i = 0; i < size; i++) {
+                TreeNode curr = queue.poll();
+                // 记录每一列的第一个
+                if (i == 0) {
+                    LastFirst = curr.val;
+                }
+
+                if (curr.left != null) queue.offer(curr.left);
+                if (curr.right != null) queue.offer(curr.right);
+            }
+        }
+
+        return LastFirst;
+    }
+}
+```
+
+> 遍历框架，递归解法：
+> 第一个元素，可以使用前序遍历左中右, 深度更新的瞬间，因为是前序遍历，一定是每一层的第一个元素
+
+```java
+class Solution {
+    int maxDepth = 0;
+    int lastFirst = 0;
+    public int findBottomLeftValue(TreeNode root) {
+        // 遍历框架，递归解法，前序遍历求深度。102
+        // 这题有两个思考点：
+        // 1. 最后一列， 需要深度信息
+        // 2. 第一个元素，可以使用前序遍历左中右
+        // 参数，root 和 深度
+        // bc: root 为空
+        // 每一个判断深度是否是最深，是的话更新第一个值
+        traverse(root, 1);
+        return lastFirst;
+    }
+
+    void traverse(TreeNode root, int depth) {
+        if (root == null) {
+            return;
+        }
+
+        // 处理，前序遍历在深度递增的时候，第一个元素一定是最左边的元素
+        if (maxDepth < depth) {
+            maxDepth = depth;
+            lastFirst = root.val;
+        }
+
+        // 遍历：
+        traverse(root.left, depth + 1);
+        traverse(root.right, depth + 1);
+    }
+     
+}
+```
+
+## 难点
+怎么判断最后一列？如何记录最左边节点？
