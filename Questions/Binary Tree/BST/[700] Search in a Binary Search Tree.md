@@ -1,0 +1,42 @@
+# [Search in a Binary Search Tree - LeetCode](https://leetcode.com/problems/search-in-a-binary-search-tree/description/)
+## Tag
+Binary Search Tree
+
+## 考点  
+BST
+
+## 解法  
+> 递归解法：
+```java
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+        // BC:
+        if (root == null) {
+            return null;
+        }
+        if (root.val == val) {
+            return root;
+        }
+        
+        // 访问：跟二分搜索思路一致，看去哪边：
+        if (val < root.val) {
+            return searchBST(root.left, val);
+        } else {
+            return searchBST(root.right, val);
+        }
+    }
+}
+```
+> 迭代解法：
+```java
+class Solution {
+    // 迭代，利用二叉搜索树特点，优化，可以不需要栈
+    public TreeNode searchBST(TreeNode root, int val) {
+        while (root != null)
+            if (val < root.val) root = root.left;
+            else if (val > root.val) root = root.right;
+            else return root;
+        return null;
+    }
+}
+```
