@@ -1,0 +1,106 @@
+# [Minimum Absolute Difference in BST - LeetCode](https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/)
+## Tag
+BST, inOrder
+## 审题（关键词） 
+找最小差值
+
+## 初始思路  
+还是得遍历一遍，因为是BST，所以最小肯定在中序遍历的相邻值之间
+
+## 考点  
+BST的中序遍历
+
+## 解法  
+> 记录前一个值，中序遍历比较min
+```java
+class Solution {
+    int min = Integer.MAX_VALUE;
+    Integer prev;
+
+    public int getMinimumDifference(TreeNode root) {
+        if (root == null) {
+            return -1;
+        }    
+
+        getMinimumDifference(root.left);
+
+        if (prev != null) {
+            min = Math.min(min, root.val - prev);
+        }
+        prev = root.val;
+
+        getMinimumDifference(root.right);
+
+        return min;
+    }
+}
+```
+> 中序遍历得到数组，遍历一遍得到最小gap
+```java
+class Solution {
+    public int getMinimumDifference(TreeNode root) {
+        List<Integer> inorder = new ArrayList<>();
+
+        traverse(root, inorder);
+        return findMinDiff(inorder);
+    }
+
+    private void traverse(TreeNode root, List<Integer> inorder) {
+        if (root == null) {
+            return ;
+        }
+
+        traverse(root.left, inorder);
+        inorder.add(root.val);
+        traverse(root.right, inorder);
+    }
+
+    private int findMinDiff(List<Integer> inorder) {
+        int min = Integer.MAX_VALUE;
+        for (int i = 1; i < inorder.size(); i++) {
+            int diff = inorder.get(i) - inorder.get(i - 1);
+            min = Math.min(min, diff);
+        }
+
+        return min;
+    }
+}
+```
+> 使用栈的思路：
+```java
+class Solution {
+
+
+    public int getMinimumDifference(TreeNode root) {
+        int min = Integer.MAX_VALUE;
+        Integer pre = null;
+        Stack<TreeNode> stack = new Stack<>();
+        
+        TreeNode curr = root;
+        // 中序遍历：左中右，中间节点需要左边全部遍历完毕
+        while (curr != null || !stack.isEmpty()) {
+            // 访问：当前指针还需要往左遍历, 左边节点的全部放入栈
+            if (curr != null) {
+                stack.push(curr);
+                // 访问： 左节点
+                curr = curr.left;
+            } else {
+                // 访问到最左，开始处理：出栈输出
+                curr = stack.pop();
+                
+                // 处理： 中节点
+                if (pre != null) {
+                    min = Math.min(min, curr.val - pre);
+                }
+                pre = curr.val;
+
+                // 处理完当前，回溯时，开始访问右节点。
+                curr = curr.right;
+            }
+        }
+        
+        return min;
+    }
+}
+```
+## 难点

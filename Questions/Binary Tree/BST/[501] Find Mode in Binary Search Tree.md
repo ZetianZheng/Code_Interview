@@ -1,0 +1,162 @@
+> BST中序遍历时，可以于前值比较，判断是否相同，从而得到众数。
+# [Find Mode in Binary Search Tree - LeetCode](https://leetcode.com/problems/find-mode-in-binary-search-tree/description/)
+## Tag
+BST, inOrder
+
+## 审题（关键词）
+求BST中的众数
+
+## 初始思路  
+转换成数组，最后遍历求最大值
+
+:先遍历一遍数组，找出最大频率（maxCount），然后再重新遍历一遍数组把出现频率为maxCount的元素放进集合。（因为众数有多个）
+
+由此也可以在BST中搜索两次找到最大频率的集合
+处理过程： 先计数，再更新最大值和答案。
+
+优化技巧：
+使用一个list存答案，
+当有一个出现频率大于当前max时，清空list，存入新的最大值。保留最大值集合。
+
+## 考点  
+
+## 解法  
+> 使用中序遍历+数组转换
+```java
+class Solution {
+    public int[] findMode(TreeNode root) {
+        List<Integer> inorder = new ArrayList<>();
+
+        traverse(root, inorder);
+        return findMode(inorder);
+    }
+
+     private void traverse(TreeNode root, List<Integer> inorder) {
+        if (root == null) {
+            return ;
+        }
+
+        traverse(root.left, inorder);
+        inorder.add(root.val);
+        traverse(root.right, inorder);
+    }
+
+    private int[] findMode(List<Integer> list) {
+        Set<Integer> modes = new HashSet<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int max = 0;
+        for (int i : list) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
+            max = Math.max(max, map.get(i));
+        }
+
+        for (int i : list) {
+            if (map.get(i) == max) {
+                modes.add(i);
+            }
+        }
+
+        return modes.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+```
+
+> 不适用额外空间，使用prev指针和比较更新答案：
+```java
+class Solution {
+    List<Integer>  ans = new ArrayList<>();
+    int max = 0;
+    int count = 0;
+    TreeNode prev = null;
+    public int[] findMode(TreeNode root) {
+        // 中序遍历
+        // BC:
+        // 中序处理：count是否是最大，如果最大，更新max和ans数组
+        // 遍历，遍历左右节点
+        traverse(root);
+
+        return ans.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+     private void traverse(TreeNode root) {
+        if (root == null) {
+            return ;
+        }
+        // 访问左
+        traverse(root.left); 
+        
+        // 中：处理
+        // 计数
+        if (prev == null || root.val != prev.val) {
+            count = 1;
+        } else {
+            count++;
+        }
+        // 更新数组和max
+        if (count > max) {
+            ans.clear();
+            max = count;
+            ans.add(root.val);
+        } else if (count == max) {
+            // 有多个值
+            ans.add(root.val);
+        }
+
+        prev = root;
+        // 访问右
+        traverse(root.right); //右
+    }
+
+}
+```
+> 栈的解法： 套用模板，逻辑不变
+```java
+class Solution {
+    List<Integer>  ans = new ArrayList<>();
+    int max = 0;
+    int count = 0;
+    TreeNode prev = null;
+    public int[] findMode(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        
+        TreeNode curr = root;
+        // 中序遍历：左中右，中间节点需要左边全部遍历完毕
+        while (curr != null || !stack.isEmpty()) {
+            // 访问：当前指针还需要往左遍历, 左边节点的全部放入栈
+            if (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            } else {
+                // 访问到最左，开始处理：出栈输出
+                curr = stack.pop();
+                // 中：处理
+                // 计数
+                if (prev == null || curr.val != prev.val) {
+                    count = 1;
+                } else {
+                    count++;
+                }
+                // 更新数组和max
+                if (count > max) {
+                    ans.clear();
+                    max = count;
+                    ans.add(curr.val);
+                } else if (count == max) {
+                    // 有多个值
+                    ans.add(curr.val);
+                }
+
+                prev = curr;
+
+                // 处理完当前，回溯时，开始访问右节点。
+                curr = curr.right;
+            }
+        }
+        
+        return ans.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+}
+```
+## 难点
+使用prev指针，记录信息，利用BST中序遍历的特性更新最大值。
