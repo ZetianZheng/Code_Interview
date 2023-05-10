@@ -8,7 +8,7 @@ BST, inOrder
 还是得遍历一遍，因为是BST，所以最小肯定在中序遍历的相邻值之间
 
 ## 考点  
-BST的中序遍历
+BST的中序遍历， prev指针
 
 ## 解法  
 > 记录前一个值，中序遍历比较min
@@ -87,7 +87,7 @@ class Solution {
             } else {
                 // 访问到最左，开始处理：出栈输出
                 curr = stack.pop();
-                
+
                 // 处理： 中节点
                 if (pre != null) {
                     min = Math.min(min, curr.val - pre);
