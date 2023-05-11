@@ -11,8 +11,8 @@
 - 111.二叉树的最小深度
 
 ## [102 Binary Tree Level Order Traversal - LeetCode](https://leetcode.com/problems/binary-tree-level-order-traversal/description/)
-
-> 经典层先遍历，[BFS.md](../../Template/BFS.md)
+#BFS
+> 经典层先遍历，[BFS.md](../../Template/BFS_template.md)
 ```java
 /**
  * Definition for a binary tree node.
