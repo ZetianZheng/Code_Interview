@@ -1,0 +1,157 @@
+{
+  "main": {
+    "id": "86c454440f160549",
+    "type": "split",
+    "children": [
+      {
+        "id": "80531283ba230f62",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cd579c395f4cc400",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Blog/README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2e5d3cf2bcb2d5cf",
+    "type": "split",
+    "children": [
+      {
+        "id": "ec18d7bad32fb0df",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4c3037ed8c13ecbd",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "6d460d7fc31a3e94",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#ancestor",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "5354b304bad7da8b",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "53708ecdc58c1839",
+    "type": "split",
+    "children": [
+      {
+        "id": "8b26f8f52ca73519",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a47506308d59752e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Blog/README.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "44202d0876a65350",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Blog/README.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "a6bc17c91825c3a0",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "b3f3f1b9829d4deb",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Blog/README.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "4c3037ed8c13ecbd",
+  "lastOpenFiles": [
+    "Resources/web_resource.md",
+    "Questions/Binary Tree/Binary Tree Summary.md",
+    "Questions/Binary Tree/236. Lowest Common Ancestor of a Binary Tree.md",
+    "Questions/Binary Tree/BFS/BFS_Common_Question.md",
+    "MindMaps/Algorithms/BFS.mindnode/QuickLook/Preview.jpg"
+  ]
+}
