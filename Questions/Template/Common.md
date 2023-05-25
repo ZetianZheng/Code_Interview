@@ -16,3 +16,14 @@
       ```java
       Collections.reverse(arraylist);
       ```
+2. 排序, 使用compare
+      ```java
+      Arrays.sort(points, (a, b) -> Integer.compare(a[0], b[0]));
+      ```
+3. 排序多维数组，增加不同条件 (a[0]增序，相等a[1]降序）：
+      ```java
+      Arrays.sort(people, (a, b) -> {
+            if (a[0] == b[0]) return a[1] - b[1];
+            return b[0] - a[0];
+        });
+      ```
