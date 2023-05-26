@@ -9,8 +9,14 @@
       ```java
       List<Integer> ans = new ArrayList<>();
       ...add some values...
+      // method 1
       ans.stream().mapToInt(Integer::intValue).toArray();
+
+      // method 2:
+      ans.toArray(new int[ans.size()]);
       ```
+
+
 ## 数组：
 1. 翻转数组
       ```java
