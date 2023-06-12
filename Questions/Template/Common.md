@@ -33,3 +33,9 @@
             return b[0] - a[0];
         });
       ```
+4. 打印数组：（二维）
+      ```java
+      for (int[] row: dp) {
+            System.out.println(Arrays.toString(row));
+      }
+      ```
