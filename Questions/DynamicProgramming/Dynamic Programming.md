@@ -59,3 +59,14 @@
 求最小，for循环顺序无所谓：
 - 动态规划：322. 零钱兑换 (opens new window)、[[322. Coin Change]]
 - 动态规划：279.完全平方数 [[279. Perfect Squares]]
+
+# 子序列问题
+1. LIS 
+   1. [[300. Longest Increasing Subsequence]]
+   2. [[674. Longest Continuous Increasing Subsequence]]
+2. 两个字符串比较穷举问题：比较最长重复，最长公共：
+   1. [[1143. Longest Common Subsequence]]
+   2. [[718. Maximum Length of Repeated Subarray]]
+3. LCS:
+   1. [[1143. Longest Common Subsequence]]
+   2. [[1035. Uncrossed Lines]]
