@@ -41,7 +41,6 @@
 
 ---
 
-## 遍历顺序：
 ### 01背包 [[0-1knapsack]]
 
 - 二维dp数组01背包先遍历物品还是先遍历背包都是可以的，且第二层for循环是从小到大遍历。（[01背包理论基础](https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-1.html)）
@@ -60,7 +59,7 @@
 - 动态规划：322. 零钱兑换 (opens new window)、[[322. Coin Change]]
 - 动态规划：279.完全平方数 [[279. Perfect Squares]]
 
-# 子序列问题
+## 子序列问题
 1. 单个字符串比较加条件：最长递增(子序列，子数组)
    1. LIS 
       1. [[300. Longest Increasing Subsequence]]
@@ -70,3 +69,16 @@
    2. LCS:
       1. [[1143. Longest Common Subsequence]]
       2. [[1035. Uncrossed Lines]]
+
+## 编辑距离系列问题
+1. [[392. Is Subsequence]]
+   1. 给定字符串 s 和 t ，判断 s 是否为 t 的子序列
+   2. 只需要计算删除的情况，不用考虑增加和替换的情况
+2. [[115. Distinct Subsequences]]
+   1. 给定一个字符串 s 和一个字符串 t ，计算在 s 的子序列中 t 出现的个数
+   2. 只有删除操作，不用考虑替换增加之类
+   3. 即使字符串相等匹配，也要考虑留下、不留下该字符串的情况 [[115. Distinct Subsequences#难点]]
+3. [[583. Delete Operation for Two Strings]] 
+   1. 跟115比两个字符串都可以删除[[583. Delete Operation for Two Strings#解法2：]]
+4. [[72. Edit Distance#初始思路]]
+   1. 考虑删除，替换，增加三个操作，求最小值。
