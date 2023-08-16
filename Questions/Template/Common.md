@@ -4,6 +4,10 @@
       ```java
       map.forEach((key, value) -> System.out.println(key + " = " + value));
       ```
+2. Arrays:
+   ```java
+   Arrays.toString(arr);
+   ```
 ## 常用stream:
 1.  Integer ArrayList 转换为int array
       ```java
